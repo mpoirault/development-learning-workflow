@@ -54,9 +54,16 @@ Add the marketplace once on your machine:
 /plugin marketplace add mpoirault/development-learning-workflow
 ```
 
-Then enable the plugin per repo, in that repo's `.claude/settings.json`.
-Do not enable it at user scope.
+Then install it per repo, from inside that repo:
+
+```text
+claude plugin install test-lab-learning@mpoirault --scope project
+```
+
+Do not install at user scope.
 The hook blocks edits on main, which is wrong in repos where you work on main.
+The command writes the plugin into the repo's `.claude/settings.json`.
+Add the two allow rules so `flow` can create the work branch without a prompt:
 
 ```json
 {
@@ -74,7 +81,8 @@ The hook blocks edits on main, which is wrong in repos where you work on main.
 }
 ```
 
-The allow rules let `flow` create the work branch without a prompt.
+A clone that only carries this file still needs the install command once.
+Claude Code does not pull a plugin from a GitHub marketplace on its own.
 
 Requirements on the machine: `git`, `jq`, and `uv`.
 The page builder declares an exact pygments version in an inline script block and runs through uv.
