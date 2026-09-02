@@ -31,5 +31,5 @@ jobs:
         run: tests/test_page.sh
       - name: plugin manifest
         run: |-
-          npm install -g --ignore-scripts @anthropic-ai/claude-code@2.1.258
+          npm install -g @anthropic-ai/claude-code@2.1.258
           claude plugin validate . --strict
