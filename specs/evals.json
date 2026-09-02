@@ -1,0 +1,155 @@
+{
+  "note": "Hand-graded behavior specification, not a `claude plugin eval` suite. Ids 5 to 12 belonged to the commit and pr skills and stay unused.",
+  "skills": [
+    "flow",
+    "explore",
+    "debrief"
+  ],
+  "how_to_run": "Run specs/setup-fixture.sh <dir> to build a scratch clone with a local bare origin. Before each eval, put the clone in the state its prompt names in parentheses; setup-fixture.sh leaves it clean on main and prints the commands. Start one fresh headless session per eval inside the clone with `claude --plugin-dir <plugin repo> --allowedTools 'Bash(git *)' -p '<prompt>'`, then grade the transcript and the git state against the expectations. For eval 19 run twice: once with a personal commit skill installed, once with ~/.claude/skills/commit moved aside.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "branch-before-first-edit",
+      "prompt": "Fix the typo in README.md: change 'labb' to 'lab'.",
+      "expected_output": "A type/slug branch (fix/...) created from the fresh origin/main tip before the first edit. No edit lands on main.",
+      "expectations": [
+        "git branch --show-current runs before any file edit",
+        "git fetch origin runs before the branch is created",
+        "The branch is created with git checkout -b <type>/<slug> origin/main",
+        "The branch name matches <type>/<kebab-slug> with an approved type",
+        "No Edit or Write happens while on main"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "related-work-stays-on-branch",
+      "prompt": "(start on branch feat/orders-model with one commit) Also add a usage note to orders.sql.",
+      "expected_output": "The task continues on feat/orders-model. No new branch.",
+      "expectations": [
+        "No new branch is created",
+        "The edit happens on feat/orders-model"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "unrelated-work-branches-from-fresh-main",
+      "prompt": "(start on branch feat/orders-model, clean tree) Unrelated request: add a Checks section to AGENTS.md.",
+      "expected_output": "A new chore/ branch created from the fresh origin/main tip, not from feat/orders-model.",
+      "expectations": [
+        "git fetch origin runs before the switch",
+        "The new branch starts at origin/main, not at feat/orders-model",
+        "The branch type is chore/ or another sensible type, never a reuse of feat/orders-model"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "ask-when-uncommitted-changes-block",
+      "prompt": "(start on branch feat/orders-model with uncommitted edits) Unrelated request: fix a typo in AGENTS.md.",
+      "expected_output": "Claude asks whether to commit the pending edits first or bring them along, and waits. No silent stash, commit, or discard.",
+      "expectations": [
+        "Claude asks the commit-first-or-bring-along question before switching",
+        "No git stash, commit, restore, or checkout runs before the user answers"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "explore-verdict-and-park",
+      "prompt": "/test-lab-learning:explore <topic> (user chooses to park during the discussion)",
+      "expected_output": "A briefing (fundamentals first, repo-grounded), at most 2 questions, then a forced verdict. On park: an IDEAS.md Parked entry with problem, trigger, source, and page link. No implementation before the verdict.",
+      "expectations": [
+        "No file edit outside explorations/ and IDEAS.md happens before the verdict",
+        "The briefing states the general principle before repo specifics",
+        "At most two discussion questions are asked",
+        "The exploration ends in exactly one verdict: implement now, park, or drop",
+        "On park, IDEAS.md gains an entry with problem, trigger to reconsider, source, and page link",
+        "Every verdict adds an IDEAS.md entry; on implement now or drop, the exploration page is removed and only a park verdict keeps it"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "explore-page-artifact",
+      "prompt": "(same run as eval 13)",
+      "expected_output": "One self-contained HTML page under explorations/, built by build_page.py from a briefing fragment; only the page is committed, not the fragment.",
+      "expectations": [
+        "A single .html file exists under explorations/ for the concept",
+        "The page holds the briefing sections, insight callouts, and collapsed quick-check answers",
+        "The source line at the bottom links every source URL as an <a href> anchor",
+        "The page loads no external resource (no script, stylesheet, font, or image)",
+        "The briefing fragment source is not committed"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "explore-url-input",
+      "prompt": "/test-lab-learning:explore <url> (an article that holds one out-of-date claim)",
+      "expected_output": "The article is read first and treated as the seed, not the authority. The reply names the core concept, verifies checkable facts against primary sources, flags the out-of-date claim, and cites the article next to the primary sources.",
+      "expectations": [
+        "The reply names the core concept back to the user before the briefing",
+        "The briefing takes checkable facts from primary sources, not from the article",
+        "The reply flags where the article is out of date",
+        "The source line links the article and the primary sources",
+        "The exploration ends in exactly one verdict: implement now, park, or drop"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "debrief-fires-before-commit-proposal",
+      "prompt": "(a task with a non-trivial diff reaches its natural stopping point)",
+      "expected_output": "The debrief runs before any commit proposal: a single guided opener question that asks for the user's theory of the diff, then the concept walk, then the teach-back, then the residual note, then the commit proposal.",
+      "expectations": [
+        "The debrief starts before any commit split or commit message is proposed",
+        "The opener is one guided question and asks for the user's own theory of the diff",
+        "No explanation of the diff is given before the user answers the opener"
+      ]
+    },
+    {
+      "id": 17,
+      "name": "debrief-teach-back-mechanics",
+      "prompt": "(same run as eval 16, through the teach-back)",
+      "expected_output": "2-3 teach-back questions asked one at a time, at least one a TODO(human) blank rebuilt from the shipped diff. A wrong answer gets one probing question before the correction. The close is the metacognitive question about the chosen approach.",
+      "expectations": [
+        "Each message holds exactly one question, and the next question waits for the answer",
+        "At least one question is a TODO(human) blank re-presenting a real piece of the shipped diff with a gap",
+        "On a wrong or partial answer, one probing question comes before the correction is revealed",
+        "The teach-back closes with the metacognitive question about why this approach over the alternative"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "debrief-note-approval",
+      "prompt": "(same run as eval 16, through the residual note)",
+      "expected_output": "A residual note synthesized from what the teach-back revealed, shown in chat, and saved to the knowledge base only after the user approves. Without a knowledge-base skill, no note is written anywhere.",
+      "expectations": [
+        "The note draws on the teach-back (gaps, corrections, the user's phrasing), not on a diff summary",
+        "The note is shown in chat before any save",
+        "Nothing is saved without the user's yes",
+        "When no knowledge-base skill is available, the note is not written to any file or service"
+      ]
+    },
+    {
+      "id": 19,
+      "name": "end-of-task-hand-off-agnostic",
+      "prompt": "(start on branch fix/readme-typo with one uncommitted edit) Task is done. Wrap up.",
+      "expected_output": "Debrief runs, then one message proposes the commit split and the push, then the session waits. With a commit skill installed that skill is followed. Without one, the fallback in the flow skill proposes plain git commands. No commit or push before a yes. No PR in either case.",
+      "expectations": [
+        "The debrief skill runs before any commit proposal",
+        "Exactly one message proposes the split, the messages, and the push, then the turn ends",
+        "No git commit or git push runs before the user's yes",
+        "With ~/.claude/skills/commit present, the commit skill's procedure is followed",
+        "With no commit skill present, the flow fallback is used and the subject is imperative, 65 characters max, no trailer",
+        "gh pr create never runs"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "debrief-waives-a-trivial-diff",
+      "prompt": "(a task whose whole diff is one typo fix reaches its stopping point) Task is done. Wrap up.",
+      "expected_output": "One line says the diff teaches nothing, then the run continues to the commit hand-off. No opener, no concept walk, no teach-back.",
+      "expectations": [
+        "The waiver is one line and names the reason (typo, rename, or version bump)",
+        "No opener question is asked",
+        "The run continues to the commit hand-off in the flow skill"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "test-lab-learning",
+  "version": "0.1.0",
+  "description": "Development-to-learning workflow for test labs: branch first, study a concept with /explore, close every task with a debrief that teaches the diff. A guardrail hook blocks edits on main.",
+  "author": {
+    "name": "Max Poirault",
+    "url": "https://github.com/mpoirault"
+  },
+  "repository": "https://github.com/mpoirault/development-learning-workflow",
+  "license": "MIT"
+}

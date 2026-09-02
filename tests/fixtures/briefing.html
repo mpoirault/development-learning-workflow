@@ -1,0 +1,23 @@
+<h2>The principle</h2>
+<p>A <code>source()</code> freshness check compares the newest row to a limit.</p>
+<div class="insight">Freshness is a property of the load, not of the model.</div>
+<pre><code class="language-yaml">sources:
+  - name: raw
+    freshness:
+      warn_after: {count: 12, period: hour}
+    loaded_at_field: _loaded_at
+</code></pre>
+<h2>How it fits this repo</h2>
+<p>The seed load runs once per merge, so the limit must cover a quiet day.</p>
+<pre><code class="language-sql">select max(_loaded_at) as newest from {{ source('raw', 'orders') }}
+</code></pre>
+<pre><code class="language-python">def is_fresh(newest, limit):
+    return newest &gt;= limit  # escaped operator
+</code></pre>
+<pre><code class="language-hcl">resource "dbtcloud_job" "ci" {
+  name = "ci"
+}
+</code></pre>
+<h2>Quick check</h2>
+<details><summary>What does warn_after compare?</summary><p>The newest loaded_at_field value against now.</p></details>
+<p class="source">Sources: <a href="https://docs.getdbt.com/docs/deploy/source-freshness">dbt source freshness</a></p>

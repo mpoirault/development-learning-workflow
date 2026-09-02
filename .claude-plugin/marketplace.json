@@ -1,0 +1,15 @@
+{
+  "name": "mpoirault",
+  "owner": {
+    "name": "Max Poirault",
+    "url": "https://github.com/mpoirault"
+  },
+  "description": "Max Poirault's Claude Code plugins.",
+  "plugins": [
+    {
+      "name": "test-lab-learning",
+      "source": "./",
+      "description": "Development-to-learning workflow for test labs: flow, explore, debrief, and a branch guardrail hook."
+    }
+  ]
+}

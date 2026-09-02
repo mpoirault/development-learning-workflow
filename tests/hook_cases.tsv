@@ -1,0 +1,47 @@
+# name	repo	tool	command	expected	parity
+# parity=yes rows must decide the same as the lab hook; no = stricter on purpose
+edit-on-main	main	Edit	-	deny	yes
+write-on-main	main	Write	-	deny	yes
+notebook-on-main	main	NotebookEdit	-	deny	yes
+edit-on-master	master	Edit	-	deny	no
+edit-on-feat	feat	Edit	-	allow	yes
+edit-no-remote	feat	Edit	-	allow	yes
+edit-detached-on-main-tip	detached	Edit	-	deny	no
+edit-detached-elsewhere	detached-branch	Edit	-	allow	yes
+edit-no-git	nogit	Edit	-	allow	yes
+read-tool-main	main	Read	-	allow	yes
+git-commit-main	main	Bash	git commit -m x	deny	yes
+git-push-main	main	Bash	git push origin main	deny	yes
+git-status-main	main	Bash	git status	allow	yes
+git-log-chain	main	Bash	git fetch && git log --oneline	allow	yes
+git-commit-chain	main	Bash	git add . && git commit -m x	deny	yes
+git-commit-indented	main	Bash	  git commit -m x	deny	no
+git-commit-in-if	main	Bash	if true; then git commit -m x; fi	deny	no
+git-commit-in-subshell	main	Bash	(git commit -m x)	deny	no
+git-dash-C	main	Bash	git -C . commit -m x	deny	no
+git-dash-c	main	Bash	git -c user.name=x commit -m x	deny	no
+git-reset-hard	main	Bash	git reset --hard	deny	no
+git-clean	main	Bash	git clean -fd	deny	no
+git-stash	main	Bash	git stash	deny	no
+git-checkout-dot	main	Bash	git checkout -- .	deny	no
+git-checkout-file	main	Bash	git checkout HEAD~1 README.md	deny	no
+git-checkout-new-branch	main	Bash	git checkout -b feat/x origin/main	allow	yes
+git-checkout-orphan	main	Bash	git checkout --orphan gh-pages	allow	yes
+git-switch-branch	main	Bash	git switch feat/x	deny	no
+git-switch-create	main	Bash	git switch -c feat/x	allow	yes
+git-branch-delete	main	Bash	git branch -D feat/x	deny	no
+git-branch-list	main	Bash	git branch --show-current	allow	yes
+git-branch-new	main	Bash	git branch feat/x	allow	yes
+redirect-main	main	Bash	echo a > b	deny	yes
+append-main	main	Bash	echo a >> b	deny	yes
+stderr-merge-main	main	Bash	cmd 2>&1	allow	yes
+sed-inplace-main	main	Bash	sed -i s/a/b/ f	deny	yes
+sed-plain-main	main	Bash	sed -n 1p f	allow	yes
+rm-main	main	Bash	rm -f x	deny	yes
+rm-in-loop	main	Bash	for f in *; do rm $f; done	deny	no
+mkdir-main	main	Bash	mkdir explorations	deny	yes
+ln-main	main	Bash	ln -s a b	deny	no
+terraform-plan-main	main	Bash	terraform plan	allow	yes
+terraform-apply-main	main	Bash	terraform apply	deny	yes
+git-commit-feat	feat	Bash	git commit -m x	allow	yes
+redirect-feat	feat	Bash	echo a > b	allow	yes

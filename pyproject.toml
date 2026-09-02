@@ -1,0 +1,9 @@
+[tool.rumdl]
+disable = ["MD013"]
+
+[tool.yamlfix]
+line_length = 120
+preserve_quotes = true
+sequence_style = "block_style"
+whitelines = 1
+section_whitelines = 1

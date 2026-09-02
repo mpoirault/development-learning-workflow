@@ -1,0 +1,35 @@
+---
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d  # v10.0.1
+      - name: shellcheck
+        run: uvx --from shellcheck-py==0.11.0.1 shellcheck hooks/*.sh specs/*.sh tests/*.sh
+      - name: ruff
+        run: |
+          uvx ruff@0.16.5 check skills/explore/scripts
+          uvx ruff@0.16.5 format --check skills/explore/scripts
+      - name: hook table test
+        run: tests/test_hook.sh
+      - name: page build test
+        run: tests/test_page.sh
+      - name: plugin manifest
+        run: |-
+          npm install -g --ignore-scripts @anthropic-ai/claude-code@2.1.258
+          claude plugin validate . --strict

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1040 744" role="img" aria-labelledby="ai-workflow-title ai-workflow-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="ai-workflow-title">The development-to-learning workflow</title>
+<desc id="ai-workflow-desc">Seven-step loop from explore to merge around a protected main branch. Explore writes IDEAS.md entries, merge ships to main, and debrief is the focal learning gate before every commit. Commit and PR are hand-offs to a personal skill, or to a built-in fallback.</desc>
+<defs>
+  <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#908caa"/>
+  </marker>
+  <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#ebbcba"/>
+  </marker>
+  <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#c4a7e7"/>
+  </marker>
+  <marker id="arrow-soft" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#6e6a86"/>
+  </marker>
+</defs>
+
+<!-- paper -->
+<rect width="100%" height="100%" fill="#191724"/>
+
+<!-- ring flow: clockwise circular arcs, drawn before boxes -->
+<g fill="none" stroke="#908caa" stroke-width="1.2">
+  <path d="M 600 113.726 A 240 240 0 0 1 677.843 159.209" marker-end="url(#arrow)"/>
+  <path d="M 730.105 224 A 240 240 0 0 1 759.262 358.804" marker-end="url(#arrow)"/>
+  <path d="M 744.82 424 A 240 240 0 0 1 675.009 523.227" marker-end="url(#arrow)"/>
+  <path d="M 544 578.797 A 240 240 0 0 1 497.194 578.914" marker-end="url(#arrow)"/>
+  <path d="M 365.909 524 A 240 240 0 0 1 295.603 425.123" marker-end="url(#arrow)"/>
+  <path d="M 280.835 360 A 240 240 0 0 1 309.318 225.052" marker-end="url(#arrow)"/>
+  <path d="M 361.255 160 A 240 240 0 0 1 438.87 114.129" marker-end="url(#arrow)"/>
+</g>
+
+<!-- write-back spokes: dashed, inward, curated subset -->
+<g fill="none" stroke="#6e6a86" stroke-width="1" stroke-dasharray="5,4">
+  <line x1="520" y1="132" x2="520" y2="282" marker-end="url(#arrow-soft)"/>
+  <line x1="372.487" y1="222.362" x2="450.103" y2="284.259" marker-end="url(#arrow-soft)"/>
+</g>
+
+<!-- spoke labels: opaque masks, clear of the strokes -->
+<rect x="528" y="200" width="56" height="12" rx="2" fill="#191724"/>
+<text x="532" y="209" fill="#6e6a86" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">IDEAS.MD</text>
+<rect x="372" y="264" width="32" height="12" rx="2" fill="#191724"/>
+<text x="388" y="273" fill="#6e6a86" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SHIP</text>
+
+<!-- stations -->
+<g>
+  <rect x="440" y="68" width="160" height="64" rx="6" fill="#191724" stroke="#e0def4" stroke-width="1"/>
+  <rect x="628" y="160" width="160" height="64" rx="6" fill="#191724" stroke="#e0def4" stroke-width="1"/>
+  <rect x="672" y="360" width="160" height="64" rx="6" fill="#191724" stroke="#e0def4" stroke-width="1"/>
+  <rect x="544" y="524" width="160" height="64" rx="6" fill="#191724"/>
+  <rect x="544" y="524" width="160" height="64" rx="6" fill="rgba(235,188,186,0.12)" stroke="#ebbcba" stroke-width="1"/>
+  <rect x="336" y="524" width="160" height="64" rx="6" fill="#191724" stroke="#e0def4" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="208" y="360" width="160" height="64" rx="6" fill="#191724" stroke="#e0def4" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="252" y="160" width="160" height="64" rx="6" fill="#191724" stroke="#e0def4" stroke-width="1"/>
+</g>
+
+<!-- hub: the one inverted element -->
+<rect x="420" y="288" width="200" height="104" rx="8" fill="#e0def4"/>
+
+<!-- station text -->
+<g text-anchor="middle">
+  <text x="520" y="100" fill="#e0def4" font-size="12" font-weight="600" font-family="'Geist', sans-serif">explore</text>
+  <text x="520" y="116" fill="#908caa" font-size="9" font-family="'Geist Mono', monospace">/test-lab-learning:explore</text>
+  <text x="708" y="192" fill="#e0def4" font-size="12" font-weight="600" font-family="'Geist', sans-serif">flow</text>
+  <text x="708" y="208" fill="#908caa" font-size="9" font-family="'Geist Mono', monospace">branch from origin/main</text>
+  <text x="752" y="392" fill="#e0def4" font-size="12" font-weight="600" font-family="'Geist', sans-serif">work</text>
+  <text x="752" y="408" fill="#908caa" font-size="9" font-family="'Geist Mono', monospace">edit + verify</text>
+  <text x="624" y="556" fill="#ebbcba" font-size="12" font-weight="600" font-family="'Geist', sans-serif">debrief</text>
+  <text x="624" y="572" fill="#908caa" font-size="9" font-family="'Geist Mono', monospace">teach-back close-out</text>
+  <text x="416" y="556" fill="#e0def4" font-size="12" font-weight="600" font-family="'Geist', sans-serif">commit hand-off</text>
+  <text x="416" y="572" fill="#908caa" font-size="9" font-family="'Geist Mono', monospace">your skill, or fallback</text>
+  <text x="288" y="392" fill="#e0def4" font-size="12" font-weight="600" font-family="'Geist', sans-serif">PR hand-off</text>
+  <text x="288" y="408" fill="#908caa" font-size="9" font-family="'Geist Mono', monospace">your skill, or gh</text>
+  <text x="332" y="192" fill="#e0def4" font-size="12" font-weight="600" font-family="'Geist', sans-serif">merge</text>
+  <text x="332" y="208" fill="#908caa" font-size="9" font-family="'Geist Mono', monospace">user merges the PR</text>
+  <text x="520" y="336" fill="#191724" font-size="12" font-weight="600" font-family="'Geist', sans-serif">main</text>
+  <text x="520" y="352" fill="#1f1d2e" font-size="9" font-family="'Geist Mono', monospace">protected &#183; ships via PR</text>
+</g>
+
+<!-- legend -->
+<line x1="32" y1="680" x2="1008" y2="680" stroke="rgba(224,222,244,0.12)" stroke-width="0.8"/>
+<text x="32" y="700" fill="#908caa" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+<line x1="112" y1="696" x2="140" y2="696" stroke="#908caa" stroke-width="1.2"/>
+<text x="148" y="700" fill="#908caa" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">TASK FLOW</text>
+<line x1="272" y1="696" x2="300" y2="696" stroke="#6e6a86" stroke-width="1" stroke-dasharray="5,4"/>
+<text x="308" y="700" fill="#908caa" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">WRITES BACK</text>
+<rect x="448" y="692" width="8" height="8" rx="2" fill="rgba(235,188,186,0.12)" stroke="#ebbcba" stroke-width="1"/>
+<text x="464" y="700" fill="#908caa" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">LEARNING GATE</text>
+<rect x="608" y="692" width="8" height="8" rx="2" fill="#191724" stroke="#e0def4" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="624" y="700" fill="#908caa" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">HAND-OFF (NOT IN THE PLUGIN)</text>
+</svg>
