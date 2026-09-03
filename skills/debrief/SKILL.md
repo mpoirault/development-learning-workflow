@@ -51,7 +51,6 @@ the `flow` skill.
 - Show the note in chat and ask for approval.
 - If the user approves and an installed skill's description says it
   stores notes in a knowledge base, save the note with that skill.
-  Match it by description, not by name. If no such skill exists, do
-  not save the note anywhere.
+  Match it by description, not by name. If no such skill exists, ask the user what to do with the note.
 - Never save without showing the note and getting a yes. No silent
   writes.

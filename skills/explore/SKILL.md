@@ -1,8 +1,9 @@
 ---
 name: explore
-description: Learning spike for a concept, article, or link. Typed only,
-  as /test-lab-learning:explore <topic or url>; never started by the
-  model. Produces a grounded briefing in chat, a concept page under
+description: >-
+  Learning spike for a concept, article, or link. Typed only, as
+  /test-lab-learning:explore <topic or url>; never started by the model.
+  Produces a grounded briefing in chat, a concept page under
   explorations/, and a forced verdict: implement now, park, or drop.
 disable-model-invocation: true
 ---
