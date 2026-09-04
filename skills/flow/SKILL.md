@@ -2,7 +2,8 @@
 name: flow
 description: Task router and branching workflow. Use at the start of any
   task that touches files, before the first Edit or Write, to create a
-  work branch (never edit on main). Use again when the user says the
+  work branch (never edit on main) and to ask about an explore when
+  the work is new to the repo. Use again when the user says the
   task is done, wants to wrap up, commit, push, or open a PR, to route
   that step to the skill that owns it, or to a built-in fallback when
   none is installed.
@@ -26,17 +27,38 @@ Follow this before the first file edit of any task.
    stay on it and stop here.
 3. If uncommitted changes block a branch switch, ask the user: commit them
    first, or bring them along. Wait for the answer.
-4. Run `git fetch origin`.
-5. Run `git checkout -b <type>/<slug> origin/main` with a name in the
+4. If the request mixes two unrelated changes, say so and give each
+   change its own branch. A branch holds one topic.
+5. Run `git fetch origin`.
+6. Run `git checkout -b <type>/<slug> origin/main` with a name in the
    branch format below.
-6. If the user gave a branch name, use that name instead.
+7. If the user gave a branch name, use that name instead.
+
+## Behavior: novel work
+
+Follow this once per task, after the branch exists and before the
+first edit.
+
+1. Decide if the task introduces a technique, tool, or command that
+   the repo does not use yet: a dbt feature, a terraform pattern, a
+   new CLI. A README edit, a rename, or a config tweak is not novel.
+2. If the work is novel and no explore ran on the topic, ask one
+   line: "This is new in this repo. Run /test-lab-learning:explore
+   on it first?" Then wait.
+3. If the user says yes, stop. Only the user types the command.
+4. If the user says no, continue and do not ask again for this task.
 
 ## Routing map
 
 - If the user asks to commit or push, follow the commit hand-off.
-- If the task reaches a natural stopping point, follow the `debrief`
-  skill first, then the commit hand-off for the end-of-task
-  confirmation.
+- If the task reaches a natural stopping point and the work was novel
+  (see Behavior: novel work), ask one line: "Run
+  /test-lab-learning:debrief on this diff before the commit?" Then
+  wait. On yes, follow the `debrief` skill, then the commit hand-off.
+  On no, go to the commit hand-off and do not ask again.
+- If the task reaches a natural stopping point and the work was not
+  novel, go to the commit hand-off. The user can still type the
+  debrief command.
 - If the user wants a PR, follow the PR hand-off.
 - If a side topic worth studying appears, suggest
   /test-lab-learning:explore. Only the user starts it.
