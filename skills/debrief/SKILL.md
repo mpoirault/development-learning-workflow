@@ -13,10 +13,11 @@ One question per message, then wait for the answer.
 
 ## When to run
 
-The `flow` skill routes here at the end of a task, before the commit
-proposal. If the diff teaches nothing (a typo, a rename, a version
-bump), say so in one line and continue to the commit hand-off in
-the `flow` skill.
+The `flow` skill asks the user at the end of a novel task, before the
+commit proposal, and routes here on yes. The user can also type
+/test-lab-learning:debrief at any stopping point.
+If the diff teaches nothing (a typo, a rename, a version bump),
+say so in one line and continue to the commit hand-off in the `flow` skill.
 
 ## Behavior
 

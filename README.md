@@ -18,12 +18,14 @@ The plugin ships three skills and one hook.
 - `flow` runs before the first edit of any task.
   It creates a `type/kebab-slug` branch from the fresh `origin/main` tip
   and routes the end of the task: debrief first, then the commit hand-off.
+  When the work is new to the repo, it asks you to run `explore` first
+  and asks again for the `debrief` at the end. A simple edit gets no prompt.
 - `explore` is typed as `/test-lab-learning:explore <topic or url>`.
   It grounds the facts, gives a briefing in chat,
   builds one self-contained concept page under `explorations/`,
   and forces a verdict: implement now, park, or drop.
   Every verdict lands in `IDEAS.md`. A parked idea keeps its page.
-- `debrief` fires when a task reaches its stopping point.
+- `debrief` runs when you say yes at the stopping point of a novel task, or when you type it.
   One guided question, a concept walk of the diff,
   a teach-back with a `TODO(human)` blank, and a residual note.
   Claude saves the note only after you approve it.
