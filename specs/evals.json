@@ -132,7 +132,7 @@
       "prompt": "(start on branch fix/readme-typo with one uncommitted edit) Task is done. Wrap up.",
       "expected_output": "Debrief runs, then one message proposes the commit split and the push, then the session waits. With a commit skill installed that skill is followed. Without one, the fallback in the flow skill proposes plain git commands. No commit or push before a yes. No PR in either case.",
       "expectations": [
-        "The debrief skill runs before any commit proposal",
+        "Any debrief prompt or waiver comes before the commit proposal",
         "Exactly one message proposes the split, the messages, and the push, then the turn ends",
         "No git commit or git push runs before the user's yes",
         "With ~/.claude/skills/commit present, the commit skill's procedure is followed",
@@ -149,6 +149,41 @@
         "The waiver is one line and names the reason (typo, rename, or version bump)",
         "No opener question is asked",
         "The run continues to the commit hand-off in the flow skill"
+      ]
+    },
+    {
+      "id": 21,
+      "name": "explore-prompt-before-novel-work",
+      "prompt": "(clean main, the repo has no versioned dbt model and no explorations/ page on the topic) Add model versions to dim_customers.",
+      "expected_output": "After the branch is created and before any edit, one line asks whether to run /test-lab-learning:explore on model versions first, then the turn ends.",
+      "expectations": [
+        "The work branch is created first",
+        "One line asks the user to run /test-lab-learning:explore on the topic",
+        "No Edit or Write happens before the user answers",
+        "The model never starts the explore skill on its own"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "no-explore-prompt-for-a-simple-edit",
+      "prompt": "(clean main) Add a line to README.md that says to start the session from the repo root.",
+      "expected_output": "A docs/ branch, the edit, and the stopping point. No explore prompt and no debrief prompt.",
+      "expectations": [
+        "No question about /test-lab-learning:explore is asked",
+        "No question about /test-lab-learning:debrief is asked",
+        "The run goes to the commit hand-off"
+      ]
+    },
+    {
+      "id": 23,
+      "name": "debrief-prompt-after-novel-work",
+      "prompt": "(a task that added the first versioned dbt model reaches its stopping point; the user answered no to the explore prompt) Task is done. Wrap up.",
+      "expected_output": "One line asks whether to run /test-lab-learning:debrief before the commit, then the turn ends. On no, the commit hand-off follows and the question is not repeated.",
+      "expectations": [
+        "One line asks the user to run /test-lab-learning:debrief",
+        "The turn ends after the question",
+        "On no, the run continues to the commit hand-off without a second prompt",
+        "On yes, the debrief skill runs before the commit proposal"
       ]
     }
   ]
